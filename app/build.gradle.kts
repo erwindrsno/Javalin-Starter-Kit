@@ -29,6 +29,7 @@ dependencies {
     implementation(libs.guice)
     implementation(libs.dotenv)
     implementation(libs.slf4j)
+    implementation(libs.jackson)
     testImplementation(libs.assertj)
     testImplementation(libs.mockito)
 }

@@ -9,5 +9,13 @@ public class UserModule extends AbstractModule {
     bind(UserController.class)
         .to(UserControllerImpl.class)
         .in(Singleton.class);
+
+    bind(UserService.class)
+        .to(UserServiceImpl.class)
+        .in(Singleton.class);
+
+    bind(UserRepository.class)
+        .to(UserRepositoryMockImpl.class)
+        .in(Singleton.class);
   }
 }
