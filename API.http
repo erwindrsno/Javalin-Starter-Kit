@@ -1,0 +1,4 @@
+### Test login
+GET http://localhost:7070/users/1
+Content-Type: application/json
+Accept: application/json
