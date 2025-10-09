@@ -35,7 +35,17 @@ public class UserControllerImpl implements UserController {
   @Override
   public void getAll(Context ctx) {
     List<User> usersList = this.userService.getAll();
-    ctx.json(usersList);
+    if (usersList != null) {
+      ctx.status(200).json(new ApiResponse<>(
+          usersList,
+          Map.of(
+              "requestedAt", System.currentTimeMillis())));
+      return;
+    }
+    ctx.status(404).json(new ApiResponse<>(
+        "Not available",
+        Map.of(
+            "requestedAt", System.currentTimeMillis())));
   }
 
   @Override

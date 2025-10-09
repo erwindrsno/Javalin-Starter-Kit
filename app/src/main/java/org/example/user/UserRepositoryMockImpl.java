@@ -1,10 +1,11 @@
 package org.example.user;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepositoryMockImpl implements UserRepository {
-  List<User> usersList = List.of(
+  List<User> usersList = new ArrayList<>(List.of(
       new User.Builder()
           .id(1)
           .username("erwin")
@@ -39,12 +40,15 @@ public class UserRepositoryMockImpl implements UserRepository {
           .password("mariaPass")
           .roleId(3)
           .createdAt(new Timestamp(System.currentTimeMillis()))
-          .build());
+          .build()));
 
   @Override
-  public User create() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'create'");
+  public User create(User user) {
+    boolean isDuplicated = this.usersList.stream()
+        .anyMatch(u -> u.getUsername().equalsIgnoreCase(user.getUsername()));
+    if (isDuplicated)
+      return null;
+    return usersList.add(user) ? user : null;
   }
 
   @Override
@@ -61,7 +65,7 @@ public class UserRepositoryMockImpl implements UserRepository {
   }
 
   @Override
-  public User update(int resourceId) {
+  public User update(int resourceId, User user) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'update'");
   }

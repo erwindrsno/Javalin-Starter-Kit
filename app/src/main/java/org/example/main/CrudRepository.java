@@ -7,9 +7,9 @@ public interface CrudRepository<T> {
 
   T getOne(int resourceId);
 
-  T create();
+  T create(T item);
 
-  T update(int resourceId);
+  T update(int resourceId, T item);
 
   T delete(int resourceId);
 }
