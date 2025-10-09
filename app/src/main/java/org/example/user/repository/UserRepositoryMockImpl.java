@@ -8,7 +8,7 @@ import java.util.Iterator;
 import org.example.user.User;
 
 public class UserRepositoryMockImpl implements UserRepository {
-  List<User> usersList = new ArrayList<>(List.of(
+  public List<User> usersList = new ArrayList<>(List.of(
       new User.Builder()
           .id(1)
           .username("erwin")

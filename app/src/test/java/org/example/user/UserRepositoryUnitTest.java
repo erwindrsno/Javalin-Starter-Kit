@@ -8,6 +8,8 @@ import org.junit.jupiter.api.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.example.user.repository.*;
+
 public class UserRepositoryUnitTest {
 
   private UserRepositoryMockImpl userRepository;
@@ -36,7 +38,7 @@ public class UserRepositoryUnitTest {
     // given
     UserRepositoryMockImpl emptyRepo = new UserRepositoryMockImpl() {
       {
-        usersList = List.of();
+        this.usersList = List.of();
       }
     };
 

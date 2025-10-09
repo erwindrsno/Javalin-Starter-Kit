@@ -30,6 +30,7 @@ dependencies {
     implementation(libs.dotenv)
     implementation(libs.slf4j)
     implementation(libs.jackson)
+    implementation(libs.argon2)
     testImplementation(libs.assertj)
     testImplementation(libs.mockito)
 }
