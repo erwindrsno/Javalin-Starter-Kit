@@ -1,6 +1,6 @@
 package org.example.main;
 
-import org.example.user.UserController;
+import org.example.user.controller.UserController;
 import org.example.user.UserModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

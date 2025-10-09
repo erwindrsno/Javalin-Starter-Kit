@@ -1,4 +1,4 @@
-package org.example.user;
+package org.example.user.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -10,6 +10,9 @@ import com.google.inject.Inject;
 import org.example.main.ApiResponse;
 
 import io.javalin.http.Context;
+
+import org.example.user.service.UserService;
+import org.example.user.User;
 
 public class UserControllerImpl implements UserController {
   private final Logger logger = LoggerFactory.getLogger(UserControllerImpl.class);

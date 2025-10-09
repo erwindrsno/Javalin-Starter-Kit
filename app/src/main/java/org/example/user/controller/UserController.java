@@ -1,4 +1,4 @@
-package org.example.user;
+package org.example.user.controller;
 
 import io.javalin.apibuilder.CrudHandler;
 

@@ -1,8 +1,11 @@
-package org.example.user;
+package org.example.user.service;
 
 import java.util.List;
 
 import com.google.inject.Inject;
+
+import org.example.user.repository.UserRepository;
+import org.example.user.User;
 
 public class UserServiceImpl implements UserService {
   private final UserRepository userRepo;

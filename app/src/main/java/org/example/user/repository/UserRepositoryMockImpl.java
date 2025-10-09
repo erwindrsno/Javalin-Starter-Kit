@@ -1,9 +1,11 @@
-package org.example.user;
+package org.example.user.repository;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
+
+import org.example.user.User;
 
 public class UserRepositoryMockImpl implements UserRepository {
   List<User> usersList = new ArrayList<>(List.of(
