@@ -9,6 +9,7 @@ public class User {
   private final String password;
   private final int roleId;
   private final Timestamp createdAt;
+  private final Timestamp updatedAt;
   private final Timestamp deletedAt;
 
   private User(Builder builder) {
@@ -18,6 +19,7 @@ public class User {
     this.password = builder.password;
     this.roleId = builder.roleId;
     this.createdAt = builder.createdAt;
+    this.updatedAt = builder.updatedAt;
     this.deletedAt = builder.deletedAt;
   }
 
@@ -45,6 +47,10 @@ public class User {
     return createdAt;
   }
 
+  public Timestamp getUpdatedAt() {
+    return updatedAt;
+  }
+
   public Timestamp getDeletedAt() {
     return deletedAt;
   }
@@ -56,6 +62,7 @@ public class User {
     private String password;
     private int roleId;
     private Timestamp createdAt;
+    private Timestamp updatedAt;
     private Timestamp deletedAt;
 
     public Builder id(int id) {
@@ -85,6 +92,11 @@ public class User {
 
     public Builder createdAt(Timestamp createdAt) {
       this.createdAt = createdAt;
+      return this;
+    }
+
+    public Builder updatedAt(Timestamp updatedAt) {
+      this.updatedAt = updatedAt;
       return this;
     }
 

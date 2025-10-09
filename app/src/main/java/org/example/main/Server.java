@@ -17,7 +17,6 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Server {
   public static void main(String[] args) {
-    Logger logger = LoggerFactory.getLogger(Server.class);
     Dotenv dotenv = Dotenv.configure().load();
     final int PORT = Integer.parseInt(dotenv.get("PORT"));
 

@@ -3,6 +3,7 @@ package org.example.user;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 public class UserRepositoryMockImpl implements UserRepository {
   List<User> usersList = new ArrayList<>(List.of(
@@ -43,12 +44,12 @@ public class UserRepositoryMockImpl implements UserRepository {
           .build()));
 
   @Override
-  public User create(User user) {
+  public User create(User data) {
     boolean isDuplicated = this.usersList.stream()
-        .anyMatch(u -> u.getUsername().equalsIgnoreCase(user.getUsername()));
+        .anyMatch(u -> u.getUsername().equalsIgnoreCase(data.getUsername()));
     if (isDuplicated)
       return null;
-    return usersList.add(user) ? user : null;
+    return usersList.add(data) ? data : null;
   }
 
   @Override
@@ -65,14 +66,39 @@ public class UserRepositoryMockImpl implements UserRepository {
   }
 
   @Override
-  public User update(int resourceId, User user) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'update'");
+  public User update(int resourceId, User updatedData) {
+    for (int i = 0; i < usersList.size(); i++) {
+      User existingUser = usersList.get(i);
+      if (existingUser.getId() == resourceId) {
+        User newUser = new User.Builder()
+            .id(existingUser.getId())
+            .username(updatedData.getUsername() != null ? updatedData.getUsername() : existingUser.getUsername())
+            .email(updatedData.getEmail() != null ? updatedData.getEmail() : existingUser.getEmail())
+            .password(updatedData.getPassword() != null ? updatedData.getPassword() : existingUser.getPassword())
+            .roleId(updatedData.getRoleId() != 0 ? updatedData.getRoleId() : existingUser.getRoleId())
+            .updatedAt(new Timestamp(System.currentTimeMillis()))
+            .build();
+
+        this.usersList.set(i, newUser);
+        return newUser;
+      }
+    }
+    return null;
   }
 
   @Override
   public User delete(int resourceId) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    User deletedUser = null;
+    Iterator<User> iterator = usersList.iterator();
+
+    while (iterator.hasNext()) {
+      User user = iterator.next();
+      if (user.getId() == resourceId) {
+        deletedUser = user;
+        iterator.remove();
+        return deletedUser;
+      }
+    }
+    return null;
   }
 }
