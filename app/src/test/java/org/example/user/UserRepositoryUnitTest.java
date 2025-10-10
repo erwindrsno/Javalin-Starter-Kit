@@ -21,7 +21,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Non-empty list should not be null")
-  public void GET_all_users() {
+  public void testOne() {
     // given - when
     List<User> users = userRepository.getAll();
     // then
@@ -34,7 +34,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Empty list should not be null")
-  public void GET_all_users_with_empty_list() {
+  public void testTwo() {
     // given
     UserRepositoryMockImpl emptyRepo = new UserRepositoryMockImpl() {
       {
@@ -53,7 +53,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Get user by existed id")
-  public void GET_user_by_existed_id() {
+  public void testThree() {
     // given
     int existedId = 3;
     // when
@@ -67,7 +67,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Get user by non existent id")
-  public void GET_user_by_non_existent_id() {
+  public void testFour() {
     // given
     int nonExistId = 0;
     User user = userRepository.getOne(nonExistId);
@@ -78,7 +78,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Create users and should return the created user")
-  public void POST_user() {
+  public void testFive() {
     // given
     int initialSize = userRepository.getAll().size();
 
@@ -107,7 +107,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Add a user with an existed username and should return null")
-  public void POST_user_with_duplicate_name() {
+  public void testSix() {
     // given
     int initialSize = userRepository.getAll().size();
 
@@ -132,7 +132,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Update a user by id and return the updated user object")
-  public void PATCH_user_by_id() {
+  public void testSeven() {
     // given
     int expectedId = 1;
     String expectedName = "Erwin Darsono";
@@ -154,7 +154,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Update a user by non existent id and return null")
-  public void PATCH_user_by_non_existent_id() {
+  public void testEight() {
     // given
     int nonExistId = 0;
     String expectedName = "Erwin Darsono";
@@ -174,7 +174,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Delete a user by id and return deleted user")
-  public void DELETE_user_by_id() {
+  public void testNine() {
     // given
     int id = 1;
 
@@ -193,7 +193,7 @@ public class UserRepositoryUnitTest {
 
   @Test
   @DisplayName("Delete a user by non existent id and return null")
-  public void DELETE_user_by_non_existent_id() {
+  public void testTen() {
     // given
     int id = 0;
 
@@ -203,5 +203,34 @@ public class UserRepositoryUnitTest {
     // then
     assertThat(deletedUser)
         .isNull();
+  }
+
+  @Test
+  @DisplayName("Get user by email")
+  public void testEleven() {
+    // given
+    String email = "erwin@example.com";
+
+    // when
+    User user = userRepository.getByEmail(email);
+
+    // then
+    assertThat(user)
+        .isNotNull()
+        .extracting(User::getEmail)
+        .isEqualTo(email);
+  }
+
+  @Test
+  @DisplayName("Given user email, if not valid return null")
+  public void testTwelve() {
+    // given
+    String email = "rickroll@email.com";
+
+    // when
+    User user = userRepository.getByEmail(email);
+
+    // then
+    assertThat(user).isNull();
   }
 }

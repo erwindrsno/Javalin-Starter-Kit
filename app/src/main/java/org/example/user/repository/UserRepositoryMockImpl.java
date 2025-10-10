@@ -103,4 +103,12 @@ public class UserRepositoryMockImpl implements UserRepository {
     }
     return null;
   }
+
+  @Override
+  public User getByEmail(String email) {
+    return this.usersList.stream()
+        .filter(u -> u.getEmail().equals(email))
+        .findFirst()
+        .orElse(null);
+  }
 }

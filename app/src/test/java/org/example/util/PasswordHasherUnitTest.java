@@ -1,15 +1,11 @@
 package org.example.util;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.*;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
-import org.example.user.service.*;
-import org.example.user.repository.*;
 
 public class PasswordHasherUnitTest {
   private Injector injector;
