@@ -59,4 +59,19 @@ public class UserServiceImpl implements UserService {
       return retrievedUser;
     return null;
   }
+
+  @Override
+  public User register(String username, String email, String password, int roleId) {
+    if (this.userRepo.getByUsername(username) != null)
+      return null;
+    User user = new User.Builder()
+        .username(username)
+        .email(email)
+        .password(this.passwordHasher.hash(password.toCharArray()))
+        .roleId(roleId)
+        .build();
+
+    User registeredUser = this.userRepo.create(user);
+    return registeredUser;
+  }
 }

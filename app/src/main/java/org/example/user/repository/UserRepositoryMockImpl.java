@@ -111,4 +111,12 @@ public class UserRepositoryMockImpl implements UserRepository {
         .findFirst()
         .orElse(null);
   }
+
+  @Override
+  public User getByUsername(String username) {
+    return this.usersList.stream()
+        .filter(u -> u.getUsername().equals(username))
+        .findFirst()
+        .orElse(null);
+  }
 }

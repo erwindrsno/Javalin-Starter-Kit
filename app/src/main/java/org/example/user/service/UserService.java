@@ -5,4 +5,6 @@ import org.example.user.User;
 
 public interface UserService extends CrudService<User> {
   User login(String email, String password);
+
+  User register(String username, String email, String password, int roleId);
 }

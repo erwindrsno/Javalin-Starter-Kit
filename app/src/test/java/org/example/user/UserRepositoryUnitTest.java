@@ -106,31 +106,6 @@ public class UserRepositoryUnitTest {
   }
 
   @Test
-  @DisplayName("Add a user with an existed username and should return null")
-  public void testSix() {
-    // given
-    int initialSize = userRepository.getAll().size();
-
-    User newUser = new User.Builder()
-        .id(5)
-        .username("erwin")
-        .email("newuser@example.com")
-        .password("pass123")
-        .roleId(2)
-        .createdAt(new Timestamp(System.currentTimeMillis()))
-        .build();
-
-    // when
-    User createdUser = userRepository.create(newUser);
-
-    // then
-    assertThat(createdUser)
-        .isNull();
-    assertThat(userRepository.getAll())
-        .hasSize(initialSize);
-  }
-
-  @Test
   @DisplayName("Update a user by id and return the updated user object")
   public void testSeven() {
     // given
@@ -229,6 +204,35 @@ public class UserRepositoryUnitTest {
 
     // when
     User user = userRepository.getByEmail(email);
+
+    // then
+    assertThat(user).isNull();
+  }
+
+  @Test
+  @DisplayName("Get user by username")
+  public void testThirteen() {
+    // given
+    String username = "erwin";
+
+    // when
+    User user = userRepository.getByUsername(username);
+
+    // then
+    assertThat(user)
+        .isNotNull()
+        .extracting(User::getUsername)
+        .isEqualTo(username);
+  }
+
+  @Test
+  @DisplayName("Given user username, if not valid return null")
+  public void testFourteen() {
+    // given
+    String username = "rickroll@email.com";
+
+    // when
+    User user = userRepository.getByUsername(username);
 
     // then
     assertThat(user).isNull();
