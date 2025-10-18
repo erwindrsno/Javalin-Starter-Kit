@@ -2,14 +2,14 @@ package org.example.main;
 
 import java.util.List;
 
-public interface CrudService<T> {
-  List<T> getAll();
+public interface CrudService<T, R> {
+  List<R> getAll();
 
-  T getOne(int resourceId);
+  R getOne(int resourceId);
 
-  T create();
+  R create(T data);
 
-  T update(int resourceId);
+  R update(int resourceId);
 
-  T delete(int resourceId);
+  R delete(int resourceId);
 }

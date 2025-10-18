@@ -109,4 +109,8 @@ public class User {
       return new User(this);
     }
   }
+
+  // User DTOs
+  public record RegisterRequest(String username, String email, String password, int roleId) {
+  }
 }

@@ -36,12 +36,6 @@ public class UserServiceUnitTest {
     String email = "ervin@mail.com";
     String password = "ervin123";
     int roleId = 3;
-    User user = new User.Builder()
-        .username(username)
-        .email(email)
-        .password(passwordHasher.hash(password.toCharArray()))
-        .roleId(roleId)
-        .build();
 
     // setup
     when(userRepo.getByUsername(username)).thenReturn(null);

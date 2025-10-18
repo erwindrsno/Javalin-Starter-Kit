@@ -19,9 +19,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User create() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'create'");
+  public User create(UserDTO req) {
+    return null;
   }
 
   @Override
@@ -47,28 +46,28 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User login(String email, String password) {
-    User retrievedUser = this.userRepo.getByEmail(email);
+  public User login(LoginRequest req) {
+    User retrievedUser = this.userRepo.getByEmail(req.email());
 
     String hashForVerify = (retrievedUser != null)
         ? retrievedUser.getPassword()
         : "$argon2id$v=19$m=65536,t=3,p=1$c29tZXNhbHQ$6V/9iFJ8gY5u+0yWZKzJcJ6hA+3rEpuvhbnywqK8A5U";
 
-    boolean isValid = this.passwordHasher.verify(hashForVerify, password.toCharArray());
+    boolean isValid = this.passwordHasher.verify(hashForVerify, req.password().toCharArray());
     if (isValid)
       return retrievedUser;
     return null;
   }
 
   @Override
-  public User register(String username, String email, String password, int roleId) {
-    if (this.userRepo.getByUsername(username) != null)
+  public User register(RegisterRequest req) {
+    if (this.userRepo.getByUsername(req.username()) != null)
       return null;
     User user = new User.Builder()
-        .username(username)
-        .email(email)
-        .password(this.passwordHasher.hash(password.toCharArray()))
-        .roleId(roleId)
+        .username(req.username())
+        .email(req.email())
+        .password(this.passwordHasher.hash(req.password().toCharArray()))
+        .roleId(req.roleId())
         .build();
 
     User registeredUser = this.userRepo.create(user);
