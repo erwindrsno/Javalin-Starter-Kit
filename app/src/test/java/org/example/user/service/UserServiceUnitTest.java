@@ -1,4 +1,4 @@
-package org.example.user;
+package org.example.user.service;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,8 +9,8 @@ import com.google.inject.Injector;
 
 import static org.mockito.Mockito.*;
 
-import org.example.user.repository.UserRepository;
-import org.example.user.service.*;
+import org.example.user.repository.*;
+import org.example.user.*;
 import org.example.util.PasswordHasher;
 import org.example.util.UtilityModule;
 
@@ -36,6 +36,11 @@ public class UserServiceUnitTest {
     String email = "ervin@mail.com";
     String password = "ervin123";
     int roleId = 3;
+    RegisterRequest registerReq = new RegisterRequest(
+        username,
+        email,
+        password,
+        roleId);
 
     // setup
     when(userRepo.getByUsername(username)).thenReturn(null);
@@ -43,7 +48,9 @@ public class UserServiceUnitTest {
         .thenAnswer(invocation -> invocation.getArgument(0));
 
     // when
-    User registeredUser = userService.register(username, email, password, roleId);
+    User registeredUser = userService.register(registerReq);
+    // User registeredUser = userService.register(username, email, password,
+    // roleId);
 
     // then
     assertThat(registeredUser)
@@ -77,9 +84,12 @@ public class UserServiceUnitTest {
     // given
     String email = "jasonbrook@mail.com";
     String password = "jasonbrook123";
+    LoginRequest loginReq = new LoginRequest(
+        email,
+        password);
 
     // when
-    User user = userService.login(email, password);
+    User user = userService.login(loginReq);
 
     // then
     assertThat(user)

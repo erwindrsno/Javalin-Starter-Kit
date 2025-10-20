@@ -1,6 +1,7 @@
 package org.example.user.service;
 
-interface UserDTO {
+//DTO interface being put here is for encapsulation purpose
+public sealed interface UserDTO permits LoginRequest, RegisterRequest {
 }
 
 record LoginRequest(
