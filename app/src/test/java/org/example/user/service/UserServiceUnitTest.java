@@ -29,7 +29,7 @@ public class UserServiceUnitTest {
   }
 
   @Test
-  @DisplayName("Register user")
+  @DisplayName("Register user where username is not duplicate")
   public void testOne() {
     // given
     String username = "ervin darsono";
@@ -68,8 +68,30 @@ public class UserServiceUnitTest {
   }
 
   @Test
-  @DisplayName("Login user, where email and password is given")
+  @DisplayName("Register user where username is duplicate and should return null")
   public void testTwo() {
+    // given
+    String username = "erwin";
+    String email = "ervin@mail.com";
+    String password = "ervin123";
+    int roleId = 3;
+    RegisterRequest registerReq = new RegisterRequest(
+        username,
+        email,
+        password,
+        roleId);
+
+    // when
+    User registeredUser = userService.register(registerReq);
+
+    // then
+    assertThat(registeredUser)
+        .isNull();
+  }
+
+  @Test
+  @DisplayName("Login user, where email and password is given")
+  public void testThree() {
     // setUp
     User userInDb = new User.Builder()
         .id(10)
@@ -96,5 +118,23 @@ public class UserServiceUnitTest {
         .isNotNull()
         .extracting(User::getEmail)
         .isEqualTo(email);
+  }
+
+  @Test
+  @DisplayName("Login user, when email and password is empty or incorrect, return null")
+  public void testFour() {
+    // given
+    String email = "jasonbrook@mail.com";
+    String password = "jasonbrook123";
+    LoginRequest loginReq = new LoginRequest(
+        email,
+        password);
+
+    // when
+    User user = userService.login(loginReq);
+
+    // then
+    assertThat(user)
+        .isNull();
   }
 }
