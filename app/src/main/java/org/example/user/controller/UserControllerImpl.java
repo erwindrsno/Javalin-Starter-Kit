@@ -67,7 +67,7 @@ public class UserControllerImpl implements UserController {
   }
 
   @Override
-  public void login() {
+  public void login(Context ctx) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'login'");
   }

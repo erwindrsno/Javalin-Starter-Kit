@@ -29,7 +29,7 @@ public class UserServiceUnitTest {
   }
 
   @Test
-  @DisplayName("Register user where username is not duplicate")
+  @DisplayName("Should register a new user when username is not already taken")
   public void testOne() {
     // given
     String username = "ervin darsono";
@@ -49,8 +49,6 @@ public class UserServiceUnitTest {
 
     // when
     User registeredUser = userService.register(registerReq);
-    // User registeredUser = userService.register(username, email, password,
-    // roleId);
 
     // then
     assertThat(registeredUser)
@@ -68,7 +66,7 @@ public class UserServiceUnitTest {
   }
 
   @Test
-  @DisplayName("Register user where username is duplicate and should return null")
+  @DisplayName("Should return null when trying to register with a duplicate username")
   public void testTwo() {
     // given
     String username = "erwin";
@@ -81,6 +79,9 @@ public class UserServiceUnitTest {
         password,
         roleId);
 
+    // setup
+    when(userRepo.getByUsername(registerReq.username())).thenReturn(null);
+
     // when
     User registeredUser = userService.register(registerReq);
 
@@ -90,7 +91,7 @@ public class UserServiceUnitTest {
   }
 
   @Test
-  @DisplayName("Login user, where email and password is given")
+  @DisplayName("Should successfully log in when email and password are correct")
   public void testThree() {
     // setUp
     User userInDb = new User.Builder()
@@ -101,14 +102,14 @@ public class UserServiceUnitTest {
         .roleId(2)
         .build();
 
-    when(userRepo.getByEmail("jasonbrook@mail.com")).thenReturn(userInDb);
-
     // given
     String email = "jasonbrook@mail.com";
     String password = "jasonbrook123";
     LoginRequest loginReq = new LoginRequest(
         email,
         password);
+
+    when(userRepo.getByEmail(loginReq.email())).thenReturn(userInDb);
 
     // when
     User user = userService.login(loginReq);
@@ -121,7 +122,7 @@ public class UserServiceUnitTest {
   }
 
   @Test
-  @DisplayName("Login user, when email and password is empty or incorrect, return null")
+  @DisplayName("Should return null when login credentials are invalid or not found")
   public void testFour() {
     // given
     String email = "jasonbrook@mail.com";

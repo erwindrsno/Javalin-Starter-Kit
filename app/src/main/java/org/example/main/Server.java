@@ -19,6 +19,7 @@ public class Server {
   public static void main(String[] args) {
     Dotenv dotenv = Dotenv.configure().load();
     final int PORT = Integer.parseInt(dotenv.get("PORT"));
+    final Logger logger = LoggerFactory.getLogger(Server.class);
 
     Injector injector = Guice.createInjector(
         new MainModule(),
@@ -29,12 +30,18 @@ public class Server {
       config.jsonMapper(new JavalinJackson().updateMapper(mapper -> {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
       }));
+
       config.router.apiBuilder(() -> {
+        before(ctx -> {
+          logger.info(ctx.method() + " - " + ctx.path());
+        });
         path("/users", () -> {
           crud("/{id}", userCtrl);
         });
       });
+
     });
+
     app.start(PORT);
   }
 }
