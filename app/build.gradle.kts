@@ -69,7 +69,7 @@ tasks.register<PackageRename>("initializeProject") {
     } else {
         description = "Sets up the project with your custom package name defined in gradle.properties."
 
-        val defaultOldPackage = "cool.company"
+        val defaultOldPackage = "org.example"
 
         this.oldPackage.set(defaultOldPackage)
         this.newPackage.set(newPackageName)
